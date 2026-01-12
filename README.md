@@ -41,11 +41,33 @@ You can fork this repository to create your own working environment, track your 
 3. Open the `.py` files in your favorite code editor and start solving!
 
 #### 4. Test Your Work
-After completing or making progress on an assignment, use the following command to test your solution locally:
+After completing or making progress on an assignment, use one of the following commands to test your solution locally.
+
+**Note:** `ok` expects a *question name* (for example `twenty_twenty_four` or `python-basics`), not the Python filename.
+
+- macOS / Linux:
 ```bash
-python3 ok -q <file_name> --local
+python3 -m ok -q <question_name> --local
 ```
-Replace `<file_name>` with the name of the specific file you want to test.
+- Windows (recommended):
+```powershell
+py -3 -m ok -q <question_name> --local
+# or call the installed executable directly:
+C:\Users\<you>\AppData\Local\Programs\Python\Python312\Scripts\ok.exe -q <question_name> --local
+C:\Users\Lenovo\AppData\Local\Programs\Python\Python312\Scripts\ok.exe -q twenty_twenty_four --local -v
+```
+
+You can list available questions in the current assignment with:
+```bash
+python3 -m ok --tests
+# or on Windows
+py -3 -m ok --tests
+```
+
+If you just want to run doctests in a file without `ok`, use:
+```bash
+py -3 -m doctest <path-to-file> -v
+```
 
 ---
 
@@ -100,8 +122,12 @@ Replace `<file_name>` with the name of the specific file you want to test.
 python3 ok -q <file_name> --local
 ```
 将 `<file_name>` 替换为您希望测试的具体文件名称。
-
+修复了有关okpy的相关问题之后
+```
+py -3 -m doctest E:\CS61A_assignment\CS61A-Assignments\Lab\lab00\lab00.py -v
+```
 ---
+
 
 ### 注意事项
 - 确保您的系统已安装 Python，CS61A 主要使用 Python 3。
