@@ -124,7 +124,13 @@ python3 ok -q <file_name> --local
 将 `<file_name>` 替换为您希望测试的具体文件名称。
 修复了有关okpy的相关问题之后
 ```
-py -3 -m doctest E:\CS61A_assignment\CS61A-Assignments\Lab\lab00\lab00.py -v
+cd Lab\lab00
+py -3 -m client.cli.ok --tests
+# 显示当前lab中可以用于测试的题目
+```
+```
+py -3 -m client.cli.ok -q <function listed> --local
+# 用于测试某个特定的函数
 ```
 ---
 
