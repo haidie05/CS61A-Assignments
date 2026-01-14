@@ -130,6 +130,7 @@ py -3 -m client.cli.ok --tests
 ```
 ```
 py -3 -m client.cli.ok -q <function listed> --local
+py -3 -m client.cli.ok -q a_plus_abs_b --local
 # 用于测试某个特定的函数
 ```
 ---
