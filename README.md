@@ -131,9 +131,19 @@ py -3 -m client.cli.ok --tests
 ```
 py -3 -m client.cli.ok -q <function listed> --local
 # 用于测试某个特定的函数
+py -3 -m client.cli.ok -q <question number> -u --local
+# 用于解锁测试样例（完成unlock测试之后再运行上面的样例就可以知道这部分完成的对不对）
 ```
 ---
+## Project HOG
+### debug步骤
+cd Project\hog
+python -i hog.py
+然后在交互界面补充函数
 
+如果在运行交互页面之后对代码有所修改，需要运行```exit()```之后一次运行```python -i hog.py```
+### 自动在ok测试未通过时开启交互式解释器
+python ok -q 01 -i
 
 ### 注意事项
 - 确保您的系统已安装 Python，CS61A 主要使用 Python 3。
