@@ -133,6 +133,10 @@ py -3 -m client.cli.ok -q <function listed> --local
 # 用于测试某个特定的函数
 py -3 -m client.cli.ok -q <question number> -u --local
 # 用于解锁测试样例（完成unlock测试之后再运行上面的样例就可以知道这部分完成的对不对）
+python ok --local
+# 用于在本地测试整个project的测试样例是否通过
+py -3 -m client.cli.ok -q 12 --suite 1 --case 1 --local
+# 用于测试某个特定的案例
 ```
 ---
 ## Project HOG
