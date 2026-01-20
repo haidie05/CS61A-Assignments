@@ -14,6 +14,12 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
+    def equal(x):
+        if f(g(x))==g(f(x)):
+            return True
+        else:
+            return False
+    return equal
 
 
 def sum_digits(y):
@@ -36,9 +42,9 @@ def is_prime(n):
 
 def count_cond(condition):
     """Returns a function with one parameter N that counts all the numbers from
-    1 to N that satisfy the two-argument predicate function Condition, where
+    1 to N that satisfy the two-argument predicate(return True or False) function Condition, where
     the first argument for Condition is N and the second argument is the
-    number from 1 to N.
+    number from 1 to N. 
 
     >>> count_fives = count_cond(lambda n, i: sum_digits(n * i) == 5)
     >>> count_fives(10)   # 50 (10 * 5)
@@ -60,17 +66,28 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-
+    def counter(N):
+        count=0
+        for i in range (1,N+1,1):
+            if(condition(N,i)==True):
+                count+=1
+        return count
+    return counter
 
 def multiple(a, b):
     """Return the smallest number n that is a multiple of both a and b.
-
+    # 最小公倍数
     >>> multiple(3, 4)
     12
     >>> multiple(14, 21)
     42
     """
     "*** YOUR CODE HERE ***"
+    times=1
+    while(1):
+        if times*a%b==0:
+            return times*a
+        times+=1
 
 
 
@@ -83,11 +100,11 @@ def cycle(f1, f2, f3):
     ...     return x * 2
     >>> def add3(x):
     ...     return x + 3
-    >>> my_cycle = cycle(add1, times2, add3)
+    >>> my_cycle = cycle(add1, times2, add3) # my_cycle(n)表示循环执行n次
     >>> identity = my_cycle(0)
     >>> identity(5)
     5
-    >>> add_one_then_double = my_cycle(2)
+    >>> add_one_then_double = my_cycle(2) 
     >>> add_one_then_double(1)
     4
     >>> do_all_functions = my_cycle(3)
@@ -101,4 +118,18 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    def my_cycle(n):
+        def calculate_cycle(x):
+            result=x
+            for i in range (1,n+1,1):
+                if(i%3==1):
+                    result=f1(result)
+                elif(i%3==2):
+                    result=f2(result)
+                else:
+                    result=f3(result)
+            return result
+        return calculate_cycle
+    return my_cycle
+
 
