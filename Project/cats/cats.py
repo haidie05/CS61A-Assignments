@@ -193,6 +193,15 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    min=limit+1
+    similar_word=typed_word
+    for word in word_list:
+        if word==typed_word:
+            return typed_word
+        diff=diff_function(typed_word,word,limit)
+        if diff<min and diff<=limit:
+            similar_word,min=word,diff
+    return similar_word
     # END PROBLEM 5
 
 
@@ -219,7 +228,16 @@ def furry_fixes(typed, source, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    if typed==source:
+        return 0
+    elif limit==0:
+        return 1
+    elif len(typed)==0 or len(source)==0:
+        return abs(len(source)-len(typed))
+    elif typed[0]!=source[0]:
+        return 1+furry_fixes(typed[1:],source[1:],limit-1)
+    else:
+        return furry_fixes(typed[1:],source[1:],limit)
     # END PROBLEM 6
 
 
@@ -240,22 +258,28 @@ def minimum_mewtations(typed, source, limit):
     >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
     3
     """
-    assert False, 'Remove this line'
-    if ___________: # Base cases should go here, you may add more base cases as needed.
+    if typed==source: # Base cases should go here, you may add more base cases as needed.
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return 0
         # END
     # Recursive cases should go below here
-    if ___________: # Feel free to remove or add additional cases
+    elif limit==0: # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return 1
         # END
+    elif len(typed)==0 or len(source)==0:
+        return abs(len(typed)-len(source))
+    elif typed[0]==source[0]:
+        return minimum_mewtations(typed[1:],source[1:],limit)
     else:
-        add = ... # Fill in these lines
-        remove = ...
-        substitute = ...
         # BEGIN
         "*** YOUR CODE HERE ***"
+        add = minimum_mewtations(typed,source[1:],limit-1) # Fill in these lines
+        remove = minimum_mewtations(typed[1:],source,limit-1)
+        substitute = minimum_mewtations(typed[1:],source[1:],limit-1)
+        return min(add,remove,substitute)+1
         # END
 
 
