@@ -162,6 +162,11 @@ def memo_diff(diff_function):
     def memoized(typed, source, limit):
         # BEGIN PROBLEM EC
         "*** YOUR CODE HERE ***"
+        key=(typed,source,limit)
+        if key in cache:
+            return cache[key]
+        else:
+            return diff_function(typed,source,limit)
         # END PROBLEM EC
 
     return memoized
@@ -326,6 +331,12 @@ def report_progress(typed, source, user_id, upload):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    for i in range(len(typed)):
+        if typed[i]!=source[i]:
+            upload({'id':user_id,'progress':i/len(source)})
+            return (i)/len(source)
+    upload({'id':user_id,'progress':len(typed)/len(source)})
+    return len(typed)/len(source)
     # END PROBLEM 8
 
 
@@ -349,7 +360,9 @@ def time_per_word(words, timestamps_per_player):
     """
     tpp = timestamps_per_player  # A shorter name (for convenience)
     # BEGIN PROBLEM 9
-    times = []  # You may remove this line
+    players_number=len(tpp)
+    words_number=len(tpp[0])
+    times = [ [tpp[j][i]-tpp[j][i-1] for i in range(1,words_number)] for j in range(players_number)]  # You may remove this line
     # END PROBLEM 9
     return {'words': words, 'times': times}
 
@@ -377,6 +390,16 @@ def fastest_words(words_and_times):
     word_indices = range(len(words))    # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
+    result=[[] for i in player_indices]
+    for j in word_indices:
+        min_time=get_time(times, 0, j)
+        fastest_index=0
+        for i in player_indices:
+            if get_time(times, i, j)<min_time:
+                min_time=get_time(times, i, j)
+                fastest_index=i
+        result[fastest_index].append(words[j])
+    return result
     # END PROBLEM 10
 
 
@@ -401,8 +424,7 @@ def get_time(times, player_num, word_index):
     assert player_num < len(times), f"player_num {player_num} outside of 0 to {num_players-1}"
     return times[player_num][word_index]
 
-
-enable_multiplayer = False  # Change to True when you're ready to race.
+enable_multiplayer = True  # Change to True when you're ready to race.
 
 ##########################
 # Command Line Interface #
