@@ -13,6 +13,10 @@ def shuffle(s):
     """
     assert len(s) % 2 == 0, 'len(seq) must be even'
     "*** YOUR CODE HERE ***"
+    mid=len(s)//2
+    result=[[x,y] for x,y in zip(s[0:mid],s[mid:])]
+    result_flatten=[item for sublist in result for item in sublist]
+    return result_flatten
 
 
 def deep_map(f, s):
@@ -38,6 +42,11 @@ def deep_map(f, s):
     True
     """
     "*** YOUR CODE HERE ***"
+    for i in range(len(s)):
+        if not isinstance(s[i],list):
+            s[i]=f(s[i])
+        else:
+            deep_map(f,s[i])
 
 
 HW_SOURCE_FILE=__file__
@@ -47,11 +56,13 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    return ['planet',mass]
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -85,7 +96,12 @@ def total_mass(m):
 
 def balanced(m):
     """Return whether m is balanced.
-
+    t = mobile(arm(1, planet(2)),
+               arm(2, planet(1)))
+    u = mobile(arm(5, planet(1)),
+               arm(1, mobile(arm(2, planet(3)),
+                             arm(3, planet(2)))))
+    v = mobile(arm(4, t), arm(2, u))
     >>> t, u, v = examples()
     >>> balanced(t)
     True
@@ -104,7 +120,18 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    left_arm,right_arm=left(m),right(m)
+    left_arm_end,right_arm_end=end(left_arm),end(right_arm)
+    M_check=total_mass(left_arm_end)*length(left_arm)==total_mass(right_arm_end)*length(right_arm)
+    if is_planet(left_arm_end):
+        left_check=True
+    else:
+        left_check=balanced(left_arm_end)
+    if is_planet(right_arm_end):
+        right_check=True
+    else:
+        right_check=balanced(right_arm_end)
+    return M_check and left_check and right_check
 
 def berry_finder(t):
     """Returns True if t contains a node with the value 'berry' and 
@@ -124,6 +151,10 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
+    if label(t)=='berry':
+        return True
+    else:
+        return any(berry_finder(b) for b in branches(t))
 
 
 HW_SOURCE_FILE=__file__
@@ -139,6 +170,11 @@ def max_path_sum(t):
     17
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        # print('DEBUG',label(t))
+        return label(t)
+    else:
+        return label(t)+ max(max_path_sum(b) for b in branches(t))
 
 
 def mobile(left, right):
@@ -211,7 +247,7 @@ def is_leaf(tree):
     """Returns True if the given tree's list of branches is empty, and False
     otherwise.
     """
-    return not branches(tree)
+    return not branches(tree) # tree branches为空
 
 def print_tree(t, indent=0):
     """Print a representation of this tree in which each node is
